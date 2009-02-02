@@ -6,11 +6,12 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
     s.name = "ffiruby-filemagic"
-    s.summary = %Q{TODO}
+    s.summary = %Q{new implementation of the ancient ruby-filemagic gem. Uses FFI to talk to native library}
     s.email = "glongman@overlay.tv"
     s.homepage = "http://github.com/glongman-otv/ffiruby-filemagic"
-    s.description = "TODO"
+    s.description = %Q{new implementation of the ancient ruby-filemagic gem. Uses FFI to talk to native library}
     s.authors = ["Geoff Longman"]
+    s.add_dependency 'ffi'
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"

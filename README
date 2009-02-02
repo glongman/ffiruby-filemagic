@@ -1,7 +1,40 @@
 ffiruby-filemagic
 =================
 
-Description goes here.
+A new implementation of the ancient ruby-filemagic gem (http://grub.ath.cx/filemagic/). 
+
+This version uses FFI to talk to the native library (JRuby friendly).
+
+(Blurb from the original gem site follows)
+
+	What is FileMagic?
+
+		FileMagic is a Ruby binding to the magic(4) library, which you may know better as the file(1) command. 
+
+		The file command identifies the type of a file using, among other tests, a test for whether the file begins with a certain magic number.
+
+Install:
+
+Make sure you have the magic(4) library installed. On OSX this can be done using MacPorts (http://www.macports.org/)
+
+> sudo port install file
+> sudo gem install glongman-otv-ffiruby-filemagic
+
+ - Linux? should just work 
+ - Cygwin? no idea, never use it
+ - Windows? see above
+
+Usage:
+
+> irb
+>> require 'ffiruby-filemagic'
+=> true
+>> fm = FFIFileMagic.new(FFIFileMagic::MAGIC_MIME)
+=> #<FFIFileMagic:0x11a4d9c @cookie=#<Native Pointer address=0x13606f0>>
+>> fm.file(rails.png)
+=> "image/png"
+>> 
+
 
 COPYRIGHT
 =========

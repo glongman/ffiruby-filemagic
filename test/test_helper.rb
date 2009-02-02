@@ -1,10 +1,7 @@
 require 'rubygems'
 require 'test/unit'
-require 'shoulda'
-require 'mocha'
 
-$LOAD_PATH.unshift(File.dirname(__FILE__))
-require 'ffiruby_filemagic'
+require File.expand_path(File.dirname(__FILE__) + '/../lib/ffi_file_magic')
 
 class Test::Unit::TestCase
 end

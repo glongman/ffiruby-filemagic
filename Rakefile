@@ -12,6 +12,7 @@ begin
     s.description = %Q{new implementation of the ancient ruby-filemagic gem. Uses FFI to talk to native library}
     s.authors = ["Geoff Longman"]
     s.add_dependency 'ffi'
+    s.files =  FileList["[A-Z]*", "{lib,test}/**/*"]
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"

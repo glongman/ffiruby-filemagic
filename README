@@ -28,7 +28,7 @@ Make sure you have the magic(4) library installed. On OSX this can be done using
 Usage:
 
 > irb
->> require 'ffiruby-filemagic'
+>> require 'ffi_file_magic'
 => true
 >> fm = FFIFileMagic.new(FFIFileMagic::MAGIC_MIME)
 => #<FFIFileMagic:0x11a4d9c @cookie=#<Native Pointer address=0x13606f0>>

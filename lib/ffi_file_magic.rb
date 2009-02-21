@@ -73,8 +73,7 @@ class FFIFileMagic
     begin
       ffi_lib 'magic'
     rescue LoadError
-      libsuffix = %x(uname -a) =~ /Darwin/ ? '.dylib' : '.so'
-      ffi_lib "/opt/local/lib/libmagic" + libsuffix
+      ffi_lib "/opt/local/lib/"+FFI.map_library_name('magic')
     end
     
     #magic_t is a pointer (I think)

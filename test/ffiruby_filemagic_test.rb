@@ -1,12 +1,12 @@
 require File.dirname(__FILE__) + '/test_helper'
-require 'ruby-debug'
+
 class TestFFIFileMagic < Test::Unit::TestCase
   BASE = File.expand_path(File.dirname(__FILE__)) + "/"
   FILE = BASE + "pyfile"
   LINK = BASE + 'pylink'
   COMPRESSED = BASE + 'pyfile-compressed.gz'
   PERL = BASE + "perl"
-  DB = File.expand_path(BASE + '../perl.mgc')
+  DB = File.expand_path(BASE + '/perl.mgc')
   def test_file
     fm = FFIFileMagic.new(FFIFileMagic::MAGIC_NONE)  
     res = fm.file FILE

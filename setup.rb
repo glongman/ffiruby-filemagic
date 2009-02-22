@@ -95,7 +95,7 @@ END_FAIL
 end
 
 template =<<END_TEMPLATE
-module FFIFileMagic
+class FFIFileMagic
   module Native
     module LoadLibrary
       def self.included(base)

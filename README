@@ -1,6 +1,8 @@
 ffiruby-filemagic
 =================
 
+Win32 Support? sorry.
+
 A new implementation of the ancient ruby-filemagic gem (http://grub.ath.cx/filemagic/). 
 
 This version uses FFI to talk to the native library (JRuby friendly).
@@ -15,27 +17,45 @@ What is FileMagic?
 
 Install:
 
-Make sure you have the magic(4) library installed. On OSX this can be done using MacPorts (http://www.macports.org/)
+Make sure you have the magic(4) library installed. 
 
-> sudo port install file
 > sudo gem sources -a http://gems.github.com
 > sudo gem install glongman-otv-ffiruby-filemagic
 
- - Linux? should just work 
- - Cygwin? no idea, never use it
- - Windows? see above
-
-Usage:
+After Install:
 
 > irb
 >> require 'ffi_file_magic'
 => true
 >> fm = FFIFileMagic.new(FFIFileMagic::MAGIC_MIME)
 => #<FFIFileMagic:0x11a4d9c @cookie=#<Native Pointer address=0x13606f0>>
->> fm.file('rails.png')
+>> fm.file('rails.png') #supply a path to your own image
 => "image/png"
 >> 
 
+Install Problems?
+ 
+If the gem complains that it can't find the magic library you can run the setup.rb file
+in the root of the gem
+
+> sudo ruby /path/to/ffiruby-filemagic/setup.rb    (where is the gem? 'gem contents ffiruby-filemagic')
+
+Without any arguments setup.rb will look around the filesystem for a magic library and test to see if
+that library is compatible. If so a small modification will be made so the gem will work.
+
+You can run setup.rb more than once. 
+
+you can also tell setup.rb exactly where to look for the magic libary
+
+> sudo ruby /path/to/ffiruby-filemagic/setup.rb --with-magic-lib=/opt/local/lib
+
+This gem has been tested with the magic library shipped with File 4.26 from ftp://ftp.astron.com/pub/file
+
+On OSX, and at the time of writing this, you can get file using macports (http://www.macports.org/)
+
+> sudo port install file
+
+On other Unix variants, download the source, build and install. then run setup.rb
 
 COPYRIGHT
 =========

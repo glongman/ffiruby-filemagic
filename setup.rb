@@ -1,11 +1,18 @@
-#!/usr/bin/env ruby
-
+require 'optparse'
 require "rubygems"
 require "ffi"
 
+
+libname = FFI.map_library_name('magic')
+
 module FFIFileMagic
   module Checker
-    def self.check_lib(dylib)
+    def self.check_lib(path)
+      begin
+        dylib = FFI::DynamicLibrary.open(path, FFI::DynamicLibrary::RTLD_LAZY | FFI::DynamicLibrary::RTLD_LOCAL)
+      rescue LoadError
+        return
+      end
       puts "checking for needed methods in #{dylib.name}"
       result = true
       [:magic_open,   :magic_close,   :magic_file,
@@ -37,25 +44,37 @@ if RUBY_PLATFORM =~ /mswin/
 END_MSWIN
 end
 
-# no fuss, no muss?
-default_dylib = nil
-begin
-  default_dylib = FFI::DynamicLibrary.open('magic', FFI::DynamicLibrary::RTLD_LAZY | FFI::DynamicLibrary::RTLD_LOCAL)
-rescue LoadError; end
+op = nil
+ARGV.options do |op|
+  op.def_option('--with-magic-lib=ARBITRARY', '-l', 'arg') do |arg|
+    puts arg
+    $user_lib_path = File.join(arg, libname) if arg
+  end
+end
+ARGV.options.parse!
 
-dylib = FFIFileMagic::Checker.check_lib(default_dylib) if default_dylib
+dylib = nil
+if $user_lib_path
+  #user supplied
+  dylib = FFIFileMagic::Checker.check_lib($user_lib_path)
+  puts "No suitable magic library found at #{$user_lib_path}" unless dylib
+end
 
-unless dylib
+
+unless dylib || $user_lib_path
+  # no fuss, no muss?
+  dylib = default_dylib = FFIFileMagic::Checker.check_lib('magic')
+end
+
+unless dylib || $user_lib_path
   #check some usual suspects
   paths = %w{ /lib/ /usr/lib/ /usr/local/lib/ /opt/local/lib/}
-  libname = FFI.map_library_name('magic')
   found_path = nil
   paths.uniq.each do |path|
      full_path = path + libname
   	 if File.exist? full_path
   	   begin
-  	     dylib = FFI::DynamicLibrary.open(full_path, FFI::DynamicLibrary::RTLD_LAZY | FFI::DynamicLibrary::RTLD_LOCAL)
-    	   break if FFIFileMagic::Checker.check_lib(dylib)
+  	     break if (dylib = FFIFileMagic::Checker.check_lib(full_path))
 	     rescue LoadError; end
      end
   end
@@ -76,19 +95,21 @@ END_FAIL
 end
 
 template =<<END_TEMPLATE
-module Native
-  module LoadLibrary
-    def self.included(base)
-      base.class_eval do
-        # setup.rb found this library as suitable
-        ffi_lib '#{dylib.name}'
+module FFIFileMagic
+  module Native
+    module LoadLibrary
+      def self.included(base)
+        base.class_eval do
+          # setup.rb found this library as suitable
+          ffi_lib '#{dylib.name}'
+        end
       end
     end
-  end
-end  
+  end 
+end
 END_TEMPLATE
 
-if dylib != default_dylib
+if dylib
   print "writing path #{dylib.name} into lib/ffi_file_magic/load_library.rb ...."
   load_library = File.expand_path(File.dirname(__FILE__) + '/lib/ffi_file_magic/load_library.rb')
   File.open(load_library, 'w') do |file|

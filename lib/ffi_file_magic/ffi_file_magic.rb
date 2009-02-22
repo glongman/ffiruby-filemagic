@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'ffi'
-require File.dirname(__FILE__) + '/load_library.rb'
+require File.expand_path(File.dirname(__FILE__) + '/load_library.rb')
 class FFIFileMagicError < StandardError; end
 class FFIFileMagic
   INSTALL_PATH = nil #installation found libmagic here

@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email = %q{glongman@overlay.tv}
   s.files = ["setup.rb", "LICENSE", "Rakefile", "README", "VERSION.yml", "lib/ffi_file_magic", "lib/ffi_file_magic/ffi_file_magic.rb", "lib/ffi_file_magic/load_library.rb", "lib/ffi_file_magic.rb", "test/ffiruby_filemagic_test.rb", "test/leaktest.rb", "test/perl", "test/pyfile", "test/pyfile-compressed.gz", "test/test_helper.rb"]
   s.has_rdoc = true
-  s.homepage = %q{http://github.com/glongman-otv/ffiruby-filemagic}
+  s.homepage = %q{http://github.com/glongman/ffiruby-filemagic}
   s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.1}

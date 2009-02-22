@@ -9,7 +9,7 @@ begin
     s.name = "ffiruby-filemagic"
     s.summary = %Q{new implementation of the ancient ruby-filemagic gem. Uses FFI to talk to native library}
     s.email = "glongman@overlay.tv"
-    s.homepage = "http://github.com/glongman-otv/ffiruby-filemagic"
+    s.homepage = "http://github.com/glongman/ffiruby-filemagic"
     s.description = %Q{new implementation of the ancient ruby-filemagic gem. Uses FFI to talk to native library}
     s.authors = ["Geoff Longman"]
     s.add_dependency 'ffi'

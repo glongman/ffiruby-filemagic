@@ -20,7 +20,7 @@ Install:
 Make sure you have the magic(4) library installed. 
 
 > sudo gem sources -a http://gems.github.com
-> sudo gem install glongman-otv-ffiruby-filemagic
+> sudo gem install glongman-ffiruby-filemagic
 
 After Install:
 

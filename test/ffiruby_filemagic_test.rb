@@ -51,13 +51,15 @@ class TestFFIFileMagic < Test::Unit::TestCase
     fm.close
     assert_equal(0, res)
   end
-
+  
   def test_compile
-    fm = FFIFileMagic.new(FFIFileMagic::MAGIC_NONE)
-    res = fm.compile PERL
-    fm.close
-    assert_equal(0, res)
-    File.unlink DB
+    Dir.chdir(File.dirname(__FILE__)) do
+      fm = FFIFileMagic.new(FFIFileMagic::MAGIC_NONE)
+      res = fm.compile PERL
+      fm.close
+      assert_equal(0, res)
+      File.unlink DB
+    end
   end
   
   def file(name)

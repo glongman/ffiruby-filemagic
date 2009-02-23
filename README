@@ -24,6 +24,7 @@ Make sure you have the magic(4) library installed.
 
 After Install:
 
+> sudo ffi_file_magic_setup
 > irb
 >> require 'ffi_file_magic'
 => true
@@ -35,19 +36,18 @@ After Install:
 
 Install Problems?
  
-If the gem complains that it can't find the magic library you can run the setup.rb file
-in the root of the gem
+If the gem complains that it can't find the magic library you can run this tool:
 
-> sudo ruby /path/to/ffiruby-filemagic/setup.rb    (where is the gem? 'gem contents ffiruby-filemagic')
+> sudo ffi_file_magic_setup
 
-Without any arguments setup.rb will look around the filesystem for a magic library and test to see if
+Without any arguments the tool will look around the filesystem for a magic library and test to see if
 that library is compatible. If so a small modification will be made so the gem will work.
 
-You can run setup.rb more than once. 
+You can run the tool more than once. 
 
-you can also tell setup.rb exactly where to look for the magic libary
+you can also tell it exactly where to look for the magic libary
 
-> sudo ruby /path/to/ffiruby-filemagic/setup.rb --with-magic-lib=/opt/local/lib
+> sudo ffi_file_magic_setup --with-magic-lib=/opt/local/lib
 
 This gem has been tested with the magic library shipped with File 4.26 from ftp://ftp.astron.com/pub/file
 
@@ -55,7 +55,7 @@ On OSX, and at the time of writing this, you can get file using macports (http:/
 
 > sudo port install file
 
-On other Unix variants, download the source, build and install. then run setup.rb
+On other Unix variants, download the source, build and install. then run the tool again
 
 COPYRIGHT
 =========

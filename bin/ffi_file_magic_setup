@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require 'optparse'
 require "rubygems"
 require "ffi"
@@ -90,6 +91,12 @@ unless dylib
 |     > port install file                                                    |
 |                                                                            |
 | Others - build file from source - ftp://ftp.astron.com/pub/file/           |
+|                                                                            |
+| Or:                                                                        |
+| you can run this tool with an option to force the location of the library: |
+|                                                                            |
+| > ffi_file_magic_setup --with-magic-lib=/opt/local/lib                     |
+|                                                                            |
 +----------------------------------------------------------------------------+
 END_FAIL
 end
@@ -100,8 +107,19 @@ class FFIFileMagic
     module LoadLibrary
       def self.included(base)
         base.class_eval do
-          # setup.rb found this library as suitable
-          ffi_lib '#{dylib.name}'
+          begin
+            # the ffi_file_magic_setup tool once found this library as suitable
+            ffi_lib '#{dylib.name}'
+          rescue LoadError
+              puts <<END_LOAD_ERROR
++--------------------------------------------+
+| I was unable to load the magic library.    |
+|                                            |
+| Try running the ffi_file_magic_setup tool  |
++--------------------------------------------+            
+END_LOAD_ERROR
+            raise
+          end
         end
       end
     end
@@ -111,7 +129,7 @@ END_TEMPLATE
 
 if dylib
   print "writing path #{dylib.name} into lib/ffi_file_magic/load_library.rb ...."
-  load_library = File.expand_path(File.dirname(__FILE__) + '/lib/ffi_file_magic/load_library.rb')
+  load_library = File.expand_path(File.dirname(__FILE__) + '/../lib/ffi_file_magic/load_library.rb')
   File.open(load_library, 'w') do |file|
     file.write template
   end

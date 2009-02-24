@@ -14,7 +14,7 @@ begin
     s.authors = ["Geoff Longman"]
     s.add_dependency 'ffi'
     s.executables = ["ffi_file_magic_setup"]
-    s.files =  FileList["setup.rb", "[A-Z]*", "{lib,bin,test}/**/*"]
+    s.files =  FileList["[A-Z]*", "{lib,bin,test}/**/*"]
     s.post_install_message = "\n\nrun ffi_file_magic_setup to complete the install\n\n\n"
   end
 rescue LoadError

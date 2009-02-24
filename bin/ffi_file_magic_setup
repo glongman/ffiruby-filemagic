@@ -19,7 +19,7 @@ module FFIFileMagic
       [:magic_open,   :magic_close,   :magic_file,
        :magic_buffer, :magic_error,   :magic_setflags,
        :magic_load,   :magic_compile, :magic_check,
-       :magic_errno].each do |method|
+       :magic_errno,  :magic_descriptor].each do |method|
          result &= begin
            print "\tmethod exists? #{method} ... "
            if dylib.find_symbol(method.to_s) 
